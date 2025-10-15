@@ -9,22 +9,20 @@ class TravelLetter extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'letter_number',
-        'lecturer_name',
-        'lecturer_nip',
-        'lecturer_rank', // Ditambahkan
         'destination',
         'purpose',
         'start_date',
         'end_date',
         'vehicle',
-        'dipa_number',   // Ditambahkan
-        'dipa_date',     // Ditambahkan
+        'dipa_number',
+        'dipa_date',
     ];
+
+    // Relasi: Satu surat memiliki banyak dosen
+    public function lecturers()
+    {
+        return $this->hasMany(Lecturer::class);
+    }
 }
