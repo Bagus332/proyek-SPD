@@ -1,3 +1,59 @@
+# Dokumentasi Aplikasi SPD
+
+Aplikasi SPD adalah aplikasi berbasis Laravel untuk mengelola Surat Perjalanan Dinas. Aplikasi ini memudahkan proses pembuatan, pengelolaan, dan pelaporan surat perjalanan dinas secara digital.
+
+## Fitur Utama
+
+- Manajemen data pegawai
+- Pembuatan dan pengelolaan Surat Perjalanan Dinas (SPD)
+- Laporan perjalanan dinas
+- Otentikasi dan otorisasi pengguna
+
+## Cara Instalasi
+
+1. **Clone repository**
+   ```bash
+   git clone https://github.com/username/proyek-SPD.git
+   cd proyek-SPD
+   ```
+
+2. **Install dependensi PHP**
+   ```bash
+   composer install
+   ```
+
+3. **Copy file environment**
+   ```bash
+   cp .env.example .env
+   ```
+
+4. **Konfigurasi file `.env`**
+   - Atur koneksi database dan konfigurasi lain sesuai kebutuhan.
+
+5. **Generate application key**
+   ```bash
+   php artisan key:generate
+   ```
+
+6. **Migrasi dan seeding database**
+   ```bash
+   php artisan migrate --seed
+   ```
+
+7. **Install dependensi frontend (opsional, jika menggunakan Vite)**
+   ```bash
+   npm install
+   npm run dev
+   ```
+
+8. **Jalankan aplikasi**
+   ```bash
+   php artisan serve
+   ```
+   Akses aplikasi di `http://localhost:8000`
+
+---
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

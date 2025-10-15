@@ -66,12 +66,12 @@
 
             {{-- Daftar Dosen --}}
             <fieldset class="border p-3 mb-3">
-                <legend class="float-none w-auto p-2 fs-6">Daftar Dosen yang Bertugas</legend>
+                <legend class="float-none w-auto p-2 fs-6">Daftar Pejabat yang Bertugas</legend>
                 <div id="lecturer-list">
                     {{-- Baris pertama untuk isian dosen --}}
                     <div class="lecturer-item row mb-3">
                         <div class="col-md-4">
-                            <label class="form-label">Nama Dosen</label>
+                            <label class="form-label">Nama Pejabat pembuat komitmen</label>
                             <input type="text" name="lecturers[0][name]" class="form-control" required>
                         </div>
                         <div class="col-md-3">
@@ -79,7 +79,7 @@
                             <input type="text" name="lecturers[0][nip]" class="form-control" required>
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label">Pangkat/Gol</label>
+                            <label class="form-label">Pangkat dan Golongan</label>
                             <input type="text" name="lecturers[0][rank]" class="form-control" required>
                         </div>
                         <div class="col-md-2 d-flex align-items-end">
@@ -87,10 +87,10 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" id="add-lecturer" class="btn btn-success mt-2">Tambah Dosen</button>
+                <button type="button" id="add-lecturer" class="btn btn-success mt-2">Tambah pejabat</button>
             </fieldset>
 
-            <button type="submit" class="btn btn-primary">Buat Surat</button>
+            <button type="submit" class="btn btn-primary">Input</button>
         </form>
     </div>
 
@@ -104,7 +104,7 @@
                 newItem.classList.add('lecturer-item', 'row', 'mb-3');
                 newItem.innerHTML = `
                     <div class="col-md-4">
-                        <label class="form-label">Nama Dosen</label>
+                        <label class="form-label">Nama Pejabat</label>
                         <input type="text" name="lecturers[${lecturerIndex}][name]" class="form-control" required>
                     </div>
                     <div class="col-md-3">
@@ -112,7 +112,7 @@
                         <input type="text" name="lecturers[${lecturerIndex}][nip]" class="form-control" required>
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Pangkat/Gol</label>
+                        <label class="form-label">Pangkat dan Golongan</label>
                         <input type="text" name="lecturers[${lecturerIndex}][rank]" class="form-control" required>
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
