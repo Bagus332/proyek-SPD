@@ -51,7 +51,7 @@
         {{-- KOP SURAT --}}
         <table class="header-table">
             <tr>
-                <td><img src="https://saintek.uinib.ac.id/wp-content/uploads/2019/08/logo-uin-150x150.png" alt="Logo"></td>
+                <td><img src="{{ asset('UIN_LOGO.png') }}" alt="Logo"></td>
                 <td>
                     <div class="kop-title">KEMENTERIAN AGAMA REPUBLIK INDONESIA</div>
                     <div class="kop-title">UNIVERSITAS ISLAM NEGERI (UIN) IMAM BONJOL PADANG</div>
@@ -86,7 +86,7 @@
                         <tr><td style="width: 5%; vertical-align: top;">1.</td><td>KMA RI No.9 Tahun 2016 tentang Pedoman Tata Naskah Dinas pada Kementerian Agama RI;</td></tr>
                         <tr><td style="width: 5%; vertical-align: top;">2.</td><td>Peraturan Menteri Agama RI Nomor 6 Tahun 2018 tanggal 21 Februari 2018 tentang Perjalanan Dinas Pada Kementerian Agama;</td></tr>
                         <tr><td style="width: 5%; vertical-align: top;">3.</td><td>Permendikbud Nomor 3 Tahun 2020 tentang Standar PTKI pada Standar Proses Pembelajaran;</td></tr>
-                        <tr><td style="width: 5%; vertical-align: top;">4.</td><td>{{ $letter->dipa_number }} tanggal {{ \Carbon\Carbon::parse($letter->dipa_date)->isoFormat('D MMMM YYYY') }}.</td></tr>
+                        <tr><td style="width: 5%; vertical-align: top;">4.</td><td>DIPA {{ $letter->dipa_number }} tanggal {{ \Carbon\Carbon::parse($letter->dipa_date)->isoFormat('D MMMM YYYY') }}.</td></tr>
                     </table>
                 </td>
             </tr>
@@ -102,7 +102,7 @@
                         <tr><td style="width: 25%;">Nama</td><td>: {{ $lecturer->name }}</td></tr>
                         <tr><td>NIP</td><td>: {{ $lecturer->nip }}</td></tr>
                         <tr><td>Pangkat/Gol</td><td>: {{ $lecturer->rank }}</td></tr>
-                        <tr><td>Jabatan</td><td>: Dosen</td></tr>
+                        <tr><td>Jabatan</td><td>: {{ $lecturer->position ?? 'Dosen' }}</td></tr>
                     </table>
                 </td>
             </tr>
@@ -129,85 +129,83 @@
     @endforeach
 
 
-    {{-- HALAMAN GABUNGAN (JIKA LEBIH DARI 1 ORANG) --}}
-    @if ($letter->lecturers->count() > 1)
+    {{-- HALAMAN GABUNGAN (DITAMPILKAN SELALU; jika 1 pegawai akan berisi 1 baris bernomor) --}}
     <div class="paper-container">
          {{-- KOP SURAT --}}
-        <table class="header-table">
-            <tr>
-                <td><img src="https://saintek.uinib.ac.id/wp-content/uploads/2019/08/logo-uin-150x150.png" alt="Logo"></td>
-                <td>
-                    <div class="kop-title">KEMENTERIAN AGAMA REPUBLIK INDONESIA</div>
-                    <div class="kop-title">UNIVERSITAS ISLAM NEGERI (UIN) IMAM BONJOL PADANG</div>
-                    <div class="kop-title">FAKULTAS SAINS DAN TEKNOLOGI</div>
-                    <div class="kop-address">Alamat: Sungai Bangek Kelurahan Balai Gadang Kecamatan Koto Tangah Kota Padang</div>
-                    <div class="kop-address">Website: https://saintek.uinib.ac.id – e-mail: admin-fst@uinib.ac.id</div>
-                </td>
-            </tr>
-        </table>
-
-        <h4 class="title">SURAT TUGAS</h4>
-        <p class="letter-number">Nomor : {{ $letter->letter_number }}</p>
-        <p style="text-align: center; margin-top: 20px;">DEKAN FAKULTAS SAINS DAN TEKNOLOGI</p>
-
-        {{-- Menimbang & Dasar --}}
-        <table class="content-table">
-            <tr>
-                <td class="label">Menimbang</td> <td class="separator">:</td>
-                <td>
-                     <table style="width: 100%">
-                        <tr><td style="width: 5%; vertical-align: top;">a.</td><td>bahwa sehubungan dengan kegiatan {{ $letter->purpose }}, maka perlu diutus pihak terkait untuk kegiatan tersebut;</td></tr>
-                        <tr><td style="width: 5%; vertical-align: top;">b.</td><td>bahwa Saudara yang namanya tersebut di bawah ini dipandang cakap dan memenuhi syarat untuk kegiatan tersebut.</td></tr>
-                    </table>
-                </td>
-            </tr>
-            <tr><td colspan="3" style="height: 10px;"></td></tr>
-            <tr>
-                <td class="label">Dasar</td> <td class="separator">:</td>
-                <td>
-                    <table style="width: 100%">
-                        <tr><td style="width: 5%; vertical-align: top;">1.</td><td>KMA RI No.9 Tahun 2016 tentang Pedoman Tata Naskah Dinas pada Kementerian Agama RI;</td></tr>
-                        <tr><td style="width: 5%; vertical-align: top;">2.</td><td>Peraturan Menteri Agama RI Nomor 6 Tahun 2018 tanggal 21 Februari 2018 tentang Perjalanan Dinas Pada Kementerian Agama;</td></tr>
-                        <tr><td style="width: 5%; vertical-align: top;">3.</td><td>Permendikbud Nomor 3 Tahun 2020 tentang Standar PTKI pada Standar Proses Pembelajaran;</td></tr>
-                        <tr><td style="width: 5%; vertical-align: top;">4.</td><td>{{ $letter->dipa_number }} tanggal {{ \Carbon\Carbon::parse($letter->dipa_date)->isoFormat('D MMMM YYYY') }}.</td></tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-
-        <h4 style="text-align: center; margin-top: 20px; margin-bottom: 20px;">Memberi Tugas</h4>
-
-        <table class="content-table">
+         <table class="header-table">
              <tr>
-                <td class="label">Kepada</td><td class="separator">:</td>
-                <td>
-                    {{-- Loop untuk daftar nama gabungan --}}
-                    @foreach ($letter->lecturers as $index => $lecturer)
-                        {{ $lecturer->name }}/NIP {{ $lecturer->nip }}{{ $loop->last ? '' : ',' }}
-                    @endforeach
-                </td>
-            </tr>
+                 <td><img src="{{ asset('UIN_LOGO.jpg') }}" alt="Logo"></td>
+                 <td>
+                     <div class="kop-title">KEMENTERIAN AGAMA REPUBLIK INDONESIA</div>
+                     <div class="kop-title">UNIVERSITAS ISLAM NEGERI (UIN) IMAM BONJOL PADANG</div>
+                     <div class="kop-title">FAKULTAS SAINS DAN TEKNOLOGI</div>
+                     <div class="kop-address">Alamat: Sungai Bangek Kelurahan Balai Gadang Kecamatan Koto Tangah Kota Padang</div>
+                     <div class="kop-address">Website: https://saintek.uinib.ac.id – e-mail: admin-fst@uinib.ac.id</div>
+                 </td>
+             </tr>
+         </table>
+
+         <h4 class="title">SURAT TUGAS</h4>
+         <p class="letter-number">Nomor : {{ $letter->letter_number }}</p>
+         <p style="text-align: center; margin-top: 20px;">DEKAN FAKULTAS SAINS DAN TEKNOLOGI</p>
+
+         {{-- Menimbang & Dasar --}}
+         <table class="content-table">
+             <tr>
+                 <td class="label">Menimbang</td> <td class="separator">:</td>
+                 <td>
+                      <table style="width: 100%">
+                         <tr><td style="width: 5%; vertical-align: top;">a.</td><td>bahwa sehubungan dengan kegiatan {{ $letter->purpose }}, maka perlu diutus pihak terkait untuk kegiatan tersebut;</td></tr>
+                         <tr><td style="width: 5%; vertical-align: top;">b.</td><td>bahwa Saudara yang namanya tersebut di bawah ini dipandang cakap dan memenuhi syarat untuk kegiatan tersebut.</td></tr>
+                     </table>
+                 </td>
+             </tr>
              <tr><td colspan="3" style="height: 10px;"></td></tr>
-            <tr>
-                <td class="label">Untuk</td><td class="separator">:</td>
-                <td>Melaksanakan perjalanan dinas dalam rangka {{ $letter->purpose }} yang akan dilaksanakan di {{ $letter->destination }} pada tanggal {{ \Carbon\Carbon::parse($letter->start_date)->isoFormat('D MMMM YYYY') }} s.d {{ \Carbon\Carbon::parse($letter->end_date)->isoFormat('D MMMM YYYY') }}.</td>
-            </tr>
-        </table>
+             <tr>
+                 <td class="label">Dasar</td> <td class="separator">:</td>
+                 <td>
+                     <table style="width: 100%">
+                         <tr><td style="width: 5%; vertical-align: top;">1.</td><td>KMA RI No.9 Tahun 2016 tentang Pedoman Tata Naskah Dinas pada Kementerian Agama RI;</td></tr>
+                         <tr><td style="width: 5%; vertical-align: top;">2.</td><td>Peraturan Menteri Agama RI Nomor 6 Tahun 2018 tanggal 21 Februari 2018 tentang Perjalanan Dinas Pada Kementerian Agama;</td></tr>
+                         <tr><td style="width: 5%; vertical-align: top;">3.</td><td>Permendikbud Nomor 3 Tahun 2020 tentang Standar PTKI pada Standar Proses Pembelajaran;</td></tr>
+                         <tr><td style="width: 5%; vertical-align: top;">4.</td><td>DIPA {{ $letter->dipa_number }} tanggal {{ \Carbon\Carbon::parse($letter->dipa_date)->isoFormat('D MMMM YYYY') }}.</td></tr>
+                     </table>
+                 </td>
+             </tr>
+         </table>
 
-         <p style="margin-top: 20px;">Setelah selesai melaksanakan tugas ini segera membuat laporan tertulis kepada pimpinan terkait.</p>
-        <p>Demikian surat tugas ini dibuat untuk dapat dilaksanakan dengan sebaik-baiknya.</p>
+         <h4 style="text-align: center; margin-top: 20px; margin-bottom: 20px;">Memberi Tugas</h4>
 
-        {{-- Tanda Tangan --}}
-        <div class="signature-section">
-            Padang, {{ \Carbon\Carbon::parse($letter->created_at)->isoFormat('D MMMM YYYY') }}<br>
-            Dekan,
-            <br><br><br><br><br>
-            <strong style="text-decoration: underline;">Dr. Nurus Shalihin, M.Si.</strong><br>
-            NIP. 197507222003121003
-        </div>
-        <div class="clear"></div>
-    </div>
-    @endif
+         <table class="content-table">
+              <tr>
+                 <td class="label">Kepada</td><td class="separator">:</td>
+                 <td>
+                     {{-- Loop untuk daftar nama gabungan --}}
+                     @foreach ($letter->lecturers as $lecturer)
+                         {{ $loop->iteration }}. {{ $lecturer->name }} &nbsp;—&nbsp; NIP {{ $lecturer->nip }}<br>
+                     @endforeach
+                 </td>
+             </tr>
+              <tr><td colspan="3" style="height: 10px;"></td></tr>
+             <tr>
+                 <td class="label">Untuk</td><td class="separator">:</td>
+                 <td>Melaksanakan perjalanan dinas dalam rangka {{ $letter->purpose }} yang akan dilaksanakan di {{ $letter->destination }} pada tanggal {{ \Carbon\Carbon::parse($letter->start_date)->isoFormat('D MMMM YYYY') }} s.d {{ \Carbon\Carbon::parse($letter->end_date)->isoFormat('D MMMM YYYY') }}.</td>
+             </tr>
+         </table>
+
+          <p style="margin-top: 20px;">Setelah selesai melaksanakan tugas ini segera membuat laporan tertulis kepada pimpinan terkait.</p>
+         <p>Demikian surat tugas ini dibuat untuk dapat dilaksanakan dengan sebaik-baiknya.</p>
+
+         {{-- Tanda Tangan --}}
+         <div class="signature-section">
+             Padang, {{ \Carbon\Carbon::parse($letter->created_at)->isoFormat('D MMMM YYYY') }}<br>
+             Dekan,
+             <br><br><br><br><br>
+             <strong style="text-decoration: underline;">Dr. Nurus Shalihin, M.Si.</strong><br>
+             NIP. 197507222003121003
+         </div>
+         <div class="clear"></div>
+     </div>
 
 </body>
 </html>

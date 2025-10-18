@@ -28,7 +28,9 @@ class TravelLetterController extends Controller
             'lecturers' => 'required|array|min:1',
             'lecturers.*.name' => 'required|string|max:255',
             'lecturers.*.nip' => 'required|string|max:50',
-            'lecturers.*.rank' => 'required|string|max:100',
+            // rank dan position kini diizinkan/opsional (nullable)
+            'lecturers.*.rank' => 'nullable|string|max:100',
+            'lecturers.*.position' => 'nullable|string|max:255',
         ]);
 
         DB::beginTransaction();
@@ -48,6 +50,12 @@ class TravelLetterController extends Controller
             ]);
 
             foreach ($request->lecturers as $lecturerData) {
+                // pastikan rank & position selalu ada (default null) sebelum create
+                $lecturerData = array_merge([
+                    'rank' => null,
+                    'position' => null,
+                ], $lecturerData);
+
                 $letter->lecturers()->create($lecturerData);
             }
 
