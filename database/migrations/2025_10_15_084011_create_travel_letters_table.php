@@ -10,14 +10,40 @@ return new class extends Migration
     {
         Schema::create('travel_letters', function (Blueprint $table) {
             $table->id();
-            $table->string('letter_number')->unique();
-            $table->string('destination');
-            $table->text('purpose');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->string('vehicle');
-            $table->string('dipa_number');
-            $table->date('dipa_date');
+
+            // Data PPK
+            $table->string('ppk_nama');
+            $table->string('ppk_nip');
+
+            // Data Pegawai Pelaksana
+            $table->string('pegawai_nama');
+            $table->string('pegawai_nip');
+            $table->string('pegawai_pangkat_golongan')->nullable();
+            $table->string('pegawai_jabatan')->nullable();
+
+            // Data Pengikut (JSON)
+            $table->json('pengikut')->nullable();
+
+            // Detail Perjalanan
+            $table->text('keperluan');
+            $table->string('alat_angkut')->nullable();
+            $table->string('tempat_berangkat');
+            $table->string('tempat_tujuan');
+            $table->date('tanggal_berangkat');
+            $table->date('tanggal_kembali');
+            $table->integer('lama_perjalanan')->nullable();
+
+            // Anggaran
+            $table->string('instansi')->nullable();
+            $table->string('akun')->nullable();
+
+            // Keterangan tambahan
+            $table->text('keterangan')->nullable();
+
+            // File hasil generate
+            $table->string('file_surat_tugas')->nullable();
+            $table->string('file_spd')->nullable();
+
             $table->timestamps();
         });
     }

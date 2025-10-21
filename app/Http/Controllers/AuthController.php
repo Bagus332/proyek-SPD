@@ -14,8 +14,12 @@ class AuthController extends Controller
      */
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
         return view('auth.login');
     }
+
 
     /**
      * Proses login user.
@@ -26,7 +30,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/'); // arahkan ke halaman utama
+            return redirect()->intended(route('dashboard'));
         }
 
         return back()->withErrors([
